@@ -1,0 +1,66 @@
+namespace Dradanddrop
+{
+    /// <summary>
+    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// </summary>
+    public sealed partial class MainPage : Page
+    {
+        public MainPage()
+        {
+            this.InitializeComponent();
+
+        }
+        private void Grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+            // To display the data which is dragged    
+            e.DragUIOverride.Caption = "drop here to view image";
+            e.DragUIOverride.IsGlyphVisible = true;
+            e.DragUIOverride.IsContentVisible = true;
+            e.DragUIOverride.IsCaptionVisible = true;
+            //e.DragUIOverride.IsstorageFileNameVisible = true;
+        }
+        public class listImageData
+        {
+            public string ImageName { get; set; }
+            public string ImageSize { get; set; }
+        }
+
+        private async void Grid_Drop(object sender, DragEventArgs e)
+        {
+           
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                var storageFile = items[0] as StorageFile;
+                var contentType = storageFile.ContentType;
+                var bitmapImageName = storageFile.Name;
+                string imagepath = storageFile.Path;
+
+                ImageName.Text = storageFile.Name;
+                //ImageSize.Text = storageFile.ContentLength;
+
+                StorageFolder folder = ApplicationData.Current.LocalFolder;
+                if (contentType == "image/jpg" || contentType == "image/png" || contentType == "image/jpeg")
+                {
+                    StorageFile newFile = await storageFile.CopyAsync(folder, storageFile.Name, NameCollisionOption.GenerateUniqueName);
+                    //List<listImageData> listOfImages = null;
+                    //listOfImages = new List<listImageData>();
+                    //listOfImages.Add(new listData() { ImageName = storageFile.Name });
+                    //ListImageDetails.ItemsSource = listOfImages;
+                    ListImageDetails.Items.Add(storageFile.Name);
+                       var bitmapImg = new BitmapImage();
+                    FileStream FileVol = new FileStream(newFile.Path, FileMode.Open, FileAccess.ReadWrite);
+                    int SizeinKB = (int)(FileVol).Length / 1024;
+
+                    imgMain.Source = bitmapImg;
+                }
+
+            }
+        }
+        }
+    }
+
+
+
+   
