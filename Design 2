@@ -35,7 +35,7 @@
             <ListView x:Name="mylist"   HorizontalAlignment="Left"   Grid.Column="0"            Grid.Row="1">
                 <ListViewItem x:Name="ID"  Content="ID"  ></ListViewItem>
                 <ListViewItem  x:Name="Employee"  Content="Employee"  ></ListViewItem>
-                <ListViewItem  x:Name="Address" Content="Address"  ></ListViewItem>
+                <ListViewItem  x:Name="address" Content="Address"  ></ListViewItem>
                 <ListViewItem  x:Name="Phone"  Content="Phone"  ></ListViewItem>
                 <ListViewItem  x:Name="DOB" Content="DOB" ></ListViewItem>
                 <ListViewItem   x:Name="Designation"   Content="Designation"></ListViewItem>
